@@ -1,0 +1,21 @@
+language: ruby
+rvm: 2.0.0
+env:
+  global:
+    - GIT_COMMITTER_NAME=Yukiya Nakagawa
+    - GIT_COMMITTER_EMAIL=y.nakagawa@water-cell.jp
+    - GIT_AUTHOR_NAME=Yukiya Nakagawa
+    - GIT_AUTHOR_EMAIL=y.nakagawa@water-cell.jp
+    - secure: "h4I2CRU3F+wpe5sKGUnPqcWExeeXrlvvCssAU2kw28BUXS2lu0R4IUAls7xvSeLbUHmd9EICJQaVJqWcR19DhhK3QdCmXTkoVAbuZlNLrzL5o87fe4uerkEntXLjlzP/ujX4uR0T0neekHrOqYiMF9yxMY8yVV+ImCRvq0kSMag="
+before_script:
+    - git clone --quiet https://github.com/nkzn/nkzn.github.io.git build
+    - pushd build
+    - git checkout -b master
+    - popd
+script:
+    - bundle exec middleman build
+after_success:
+    - cd build
+    - git add -A
+    - git commit -m 'Update'
+    - '[ "$TRAVIS_BRANCH" == "master" ] && [ $GH_TOKEN ] && git push --quiet https://$GH_TOKEN@github.com/nkzn/nkzn.github.io.git master 2> /dev/null'
