@@ -10,7 +10,7 @@ env:
 before_script:
     - git clone --quiet https://github.com/nkzn/nkzn.github.io.git build
     - pushd build
-    - git checkout -b master
+    - git checkout master
     - popd
 script:
     - bundle exec middleman build
